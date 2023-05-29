@@ -14,5 +14,3 @@ module.exports = {
   getAll,
   getById,
 };
-
-// configurado
