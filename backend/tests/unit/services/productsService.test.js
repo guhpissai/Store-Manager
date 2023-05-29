@@ -14,4 +14,12 @@ describe('Testes da camada Service dos produtos', function () {
 
     expect(result).to.be.deep.equal(products);
   });
+
+  it('Deve retornar os dados corretamente de acordo com o id', async function () {
+    sinon.stub(productsModel, 'getById').resolves(products[0]);
+
+    const result = await productsService.getById(1);
+
+    expect(result).to.be.deep.equal(products[0]);
+  });
 });
