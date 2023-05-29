@@ -1,16 +1,16 @@
 const chai = require('chai');
 const sinon = require('sinon');
-const connection = require('../../../src/models/connection');
 const products = require('../mocks/productsMock');
 const productsModel = require('../../../src/models/productsModel');
+const productsService = require('../../../src/services/productsService');
 
 const { expect } = chai;
 
-describe('Testando a model de products', function () {
+describe('Testes da camada Service dos produtos', function () {
   it('Deve retornar os dados corretamente', async function () {
-    sinon.stub(connection, 'execute').resolves([products]);
+    sinon.stub(productsModel, 'getAll').resolves(products);
 
-    const result = await productsModel.getAll();
+    const result = await productsService.getAll();
 
     expect(result).to.be.deep.equal(products);
   });
