@@ -24,7 +24,7 @@ const getById = async (id) => {
   FROM StoreManager.sales_products AS p 
   LEFT JOIN StoreManager.sales AS s 
   ON s.id = p.product_id
-  WHERE sale_id = 1
+  WHERE sale_id = ?
   ORDER BY p.sale_id, productId`, [id]);
   return result;
 };

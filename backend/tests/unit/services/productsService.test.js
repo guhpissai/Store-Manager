@@ -1,6 +1,6 @@
 const chai = require('chai');
 const sinon = require('sinon');
-const products = require('../mocks/productsMock');
+const { products, data } = require('../mocks/productsMock');
 const productsModel = require('../../../src/models/productsModel');
 const productsService = require('../../../src/services/productsService');
 
@@ -21,5 +21,13 @@ describe('Testes da camada Service dos produtos', function () {
     const result = await productsService.getById(1);
 
     expect(result).to.be.deep.equal(products[0]);
+  });
+
+  it('Deve retornar os dados do produto criado', async function () {
+    sinon.stub(productsModel, 'createProduct').resolves({ id: 4, name: 'Mark III' });
+
+    const result = await productsService.createProduct(data);
+
+    expect(result).to.be.deep.equal({ id: 4, name: 'Mark III' });
   });
 });
