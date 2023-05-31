@@ -17,6 +17,10 @@ const createSaleProduct = async (data) => {
   const id = await salesModel.createSaleId();
   const salesPromisse = data.map((sale) => salesModel.createSaleProduct(sale, id));
   const result = await Promise.all(salesPromisse);
+  console.log({
+    id,
+    itemsSold: result,
+  });
   return {
     id,
     itemsSold: result,

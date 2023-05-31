@@ -3,7 +3,11 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const salesController = require('../../../src/controllers/salesController');
 const salesService = require('../../../src/services/salesService');
-const { idSalesMock, allSalesMock } = require('../mocks/salesMock');
+const { 
+  idSalesMock, 
+  allSalesMock, 
+  productsMock, 
+  serviceProductMock } = require('../mocks/salesMock');
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -45,5 +49,14 @@ describe('Testando a camada Controller da coluna sales', function () {
 
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.calledWith({ message: 'Sale not found' });
+  });
+
+  it('Deve retornar status 201 ao cadastrar uma nova venda', async function () {
+    req.body = productsMock;
+    sinon.stub(salesService, 'createSaleProduct').resolves(serviceProductMock);
+
+    await salesController.createSaleProduct(req, res);
+
+    expect(res.status).to.be.calledWith(201);
   });
 });

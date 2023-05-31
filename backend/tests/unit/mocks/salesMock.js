@@ -36,8 +36,19 @@ const idSalesMock = [
 
 const productsMock = { productId: 1, quantity: 5 };
 
+const serviceProductMock = {
+  id: 1,
+  itemsSold: [
+    {
+      productId: 1,
+      quantity: 5,
+    },
+  ],
+};
+
 module.exports = {
   allSalesMock,
   idSalesMock,
   productsMock,
+  serviceProductMock,
 };
