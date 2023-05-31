@@ -15,6 +15,7 @@ const getById = async (id) => {
 
 const createProduct = async (data) => {
   const result = await productsModel.createProduct(data);
+  console.log(result);
   return result;
 };
 

@@ -13,7 +13,18 @@ const getById = async (id) => {
   return result;
 };
 
+const createSaleProduct = async (data) => {
+  const id = await salesModel.createSaleId();
+  const salesPromisse = data.map((sale) => salesModel.createSaleProduct(sale, id));
+  const result = await Promise.all(salesPromisse);
+  return {
+    id,
+    itemsSold: result,
+  };
+};
+
 module.exports = {
   getAll,
   getById,
+  createSaleProduct,
 };

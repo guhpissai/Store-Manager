@@ -34,7 +34,10 @@ const idSalesMock = [
   },
 ];
 
+const productsMock = { productId: 1, quantity: 5 };
+
 module.exports = {
   allSalesMock,
   idSalesMock,
+  productsMock,
 };
