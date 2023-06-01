@@ -2,6 +2,7 @@ const chai = require('chai');
 const sinon = require('sinon');
 const salesModel = require('../../../src/models/salesModel');
 const salesService = require('../../../src/services/salesService');
+const productService = require('../../../src/services/productsService');
 const { 
   idSalesMock, 
   allSalesMock, 
@@ -36,10 +37,11 @@ describe('Testes da camada Service das sales', function () {
 
     const result = await salesService.getById(999);
 
-    expect(result).to.be.deep.equal(false);
+    expect(result).to.be.equal(false);
   });
 
   it('Deve ser possivel cadastrar uma nova venda', async function () {
+    sinon.stub(productService, 'getById').resolves(true);
     sinon.stub(salesModel, 'createSaleId').resolves(1);
     sinon.stub(salesModel, 'createSaleProduct').resolves(productsMock);
 

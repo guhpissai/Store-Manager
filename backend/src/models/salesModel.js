@@ -43,11 +43,6 @@ const createSaleProduct = async (sale, id) => {
 'INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?);',
   [id, sale.productId, sale.quantity],
 );
-const result = {
-  productId: sale.productId,
-  quantity: sale.quantity,
-};
-console.log(result);
 return {
   productId: sale.productId,
   quantity: sale.quantity,
