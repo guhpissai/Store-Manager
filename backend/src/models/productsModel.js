@@ -10,6 +10,7 @@ const getAll = async () => {
 const getById = async (id) => {
   const [[result]] = await connection
     .execute('SELECT * FROM StoreManager.products WHERE id = ? ORDER BY id', [id]);
+    console.log(result);
   return result;
 };
 
@@ -25,9 +26,8 @@ return result;
 };
 
 const updateProduct = async (name, id) => {
-  const result = await connection
+  await connection
   .execute('UPDATE StoreManager.products SET name = ? WHERE id = ?', [name, id]);
-  console.log(result);
   return {
     id,
     name,

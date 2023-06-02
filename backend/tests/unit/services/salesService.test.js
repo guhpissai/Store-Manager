@@ -3,6 +3,7 @@ const sinon = require('sinon');
 const salesModel = require('../../../src/models/salesModel');
 const salesService = require('../../../src/services/salesService');
 const productService = require('../../../src/services/productsService');
+const productModel = require('../../../src/models/productsModel');
 const { 
   idSalesMock, 
   allSalesMock, 
@@ -17,10 +18,11 @@ describe('Testes da camada Service das sales', function () {
   });
 
   it('Deve retornar os dados corretamente', async function () {
-    sinon.stub(salesModel, 'getAll').resolves(allSalesMock);
+    const model = sinon.stub(salesModel, 'getAll').resolves(allSalesMock);
 
     const result = await salesService.getAll();
 
+    expect(model).to.be.calledWith();
     expect(result).to.be.deep.equal(allSalesMock);
   });
 
@@ -33,10 +35,11 @@ describe('Testes da camada Service das sales', function () {
   });
 
   it('Deve retornar falso se o id nao existir', async function () {
-    sinon.stub(salesModel, 'getById').resolves(false);
+    const model = sinon.stub(salesModel, 'getById').resolves(0);
 
     const result = await salesService.getById(999);
 
+    expect(model).to.be.calledWith(999);
     expect(result).to.be.equal(false);
   });
 
@@ -48,5 +51,20 @@ describe('Testes da camada Service das sales', function () {
     const result = await salesService.createSaleProduct([productsMock]);
 
     expect(result).to.be.deep.equal(serviceProductMock);
+  });
+
+  it('Nao deve ser possivel cadastrar uma nova venda se o id nao existir', async function () {
+    sinon.stub(productService, 'getById').resolves(false);
+    sinon.stub(salesModel, 'createSaleId').resolves(undefined);
+    sinon.stub(salesModel, 'createSaleProduct').resolves(productsMock);
+
+    const result = await salesService.createSaleProduct([
+      {
+        productId: 999,
+        quantity: 1,
+      },
+    ]);
+
+    expect(result).to.be.deep.equal(false);
   });
 });

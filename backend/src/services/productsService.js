@@ -7,10 +7,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const result = await productsModel.getById(id);
-  if (!result) {
-    return false;
-  }
-  return result;
+  return !result ? false : result;
 };
 
 const createProduct = async (data) => {
@@ -26,6 +23,11 @@ const updateProduct = async (name, id) => {
   const result = await productsModel.updateProduct(name, id);
   return result;
 };
+
+// const deleteProduct = async (id) => {
+//   const idExist = await getById(id);
+//   return !!idExist;
+// };
 
 module.exports = {
   getAll,

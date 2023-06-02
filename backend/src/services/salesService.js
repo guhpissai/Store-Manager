@@ -8,7 +8,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const result = await salesModel.getById(id);
-  if (result.length === 0) {
+  if (!result.length) {
     return false;
   }
   return result;

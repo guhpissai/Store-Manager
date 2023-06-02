@@ -34,4 +34,12 @@ describe('Testando a model de products', function () {
 
     expect(result).to.be.deep.equal({ id: 4, name: 'Mark III' });
   });
+
+  it('Should be possible register a new product', async function () {
+    sinon.stub(connection, 'execute').resolves();
+
+    const result = await productsModel.updateProduct('Mark IV', 1);
+
+    expect(result).to.be.deep.equal({ id: 1, name: 'Mark IV' });
+  });
 });
