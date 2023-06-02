@@ -16,7 +16,7 @@ const getById = async (id) => {
 
 const createSaleProduct = async (data) => {
   let isTrue = true;
-  const productPromisse = data.map((sale) => productsService.getById(sale.productId));
+  const productPromisse = await data.map((sale) => productsService.getById(sale.productId));
   const promisseResult = await Promise.all(productPromisse);
   promisseResult.forEach((id) => {
     if (id === false) {
@@ -27,7 +27,7 @@ const createSaleProduct = async (data) => {
     return false;
   }
   const id = await salesModel.createSaleId();
-  const salesPromisse = data.map((sale) => salesModel.createSaleProduct(sale, id));
+  const salesPromisse = await data.map((sale) => salesModel.createSaleProduct(sale, id));
   const result = await Promise.all(salesPromisse);
   return {
     id,

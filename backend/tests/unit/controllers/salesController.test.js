@@ -47,7 +47,7 @@ describe('Testando a camada Controller da coluna sales', function () {
 
     await salesController.getById(req, res);
 
-    expect(res.status).to.be.calledWith(200);
+    expect(res.status).to.be.calledWith(404);
     expect(res.json).to.be.calledWith({ message: 'Sale not found' });
   });
 
@@ -58,5 +58,15 @@ describe('Testando a camada Controller da coluna sales', function () {
     await salesController.createSaleProduct(req, res);
 
     expect(res.status).to.be.calledWith(201);
+    expect(res.json).to.be.calledWith(serviceProductMock);
+  });
+
+  it('Deve retornar status 404 ao cadastrar uma nova venda', async function () {
+    req.body = [];
+    sinon.stub(salesService, 'createSaleProduct').resolves(false);
+
+    await salesController.createSaleProduct(req, res);
+
+    expect(res.status).to.be.calledWith(404);
   });
 });

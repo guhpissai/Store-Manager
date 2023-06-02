@@ -32,7 +32,7 @@ const getById = async (id) => {
 const createSaleId = async () => {
   const [{ insertId }] = await connection
   .execute(
-  'INSERT INTO StoreManager.sales (date) VALUES (current_timestamp());',
+  'INSERT INTO StoreManager.sales () VALUES ();',
 );
 return insertId;
 };
