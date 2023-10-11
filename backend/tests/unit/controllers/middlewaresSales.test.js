@@ -1,6 +1,6 @@
 const chai = require('chai');
 const sinon = require('sinon');
-const saleKeysValidation = require('../../../src/middlewares/saleValidation');
+const { saleKeysValidation } = require('../../../src/middlewares/saleValidation');
 
 const { expect } = chai;
 

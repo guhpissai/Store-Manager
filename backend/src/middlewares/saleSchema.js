@@ -8,4 +8,11 @@ const saleValidation = Joi.object({
   'number.min': '{{#label}} must be greater than or equal to 1',
 });
 
-module.exports = saleValidation;
+const quantityValidation = Joi.object({
+  quantity: Joi.number().min(1).required().label('quantity'),
+}).messages({
+  'string.empty': '{{#label}} is required',
+  'number.min': '{{#label}} must be greater than or equal to 1',
+});
+
+module.exports = { saleValidation, quantityValidation };

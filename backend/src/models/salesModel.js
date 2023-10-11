@@ -56,10 +56,36 @@ const deleteSale = async (id) => {
   return affectedRows;
 };
 
+const getProductInSale = async (saleId, productId) => {
+  const [result] = await connection.execute(
+    'SELECT * FROM StoreManager.sales_products WHERE product_id = ? AND sale_id = ?',
+    [productId, saleId],
+  );
+  return result;
+};
+
+const updateSalesProducts = async (saleId, productId, quantity) => {
+  const [{ affectedRows }] = await connection.execute(
+    'UPDATE StoreManager.sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
+    [quantity, saleId, productId],
+  );
+  if (affectedRows > 0) {
+    return {
+      date: new Date().toISOString(),
+      productId: +productId,
+      saleId: +saleId,
+      quantity,
+    };
+  }
+  return null;
+};
+
 module.exports = {
   getAll,
   getById,
   createSaleId,
   createSaleProduct,
   deleteSale,
+  updateSalesProducts,
+  getProductInSale,
 };
