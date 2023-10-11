@@ -24,11 +24,6 @@ const updateProduct = async (name, id) => {
   return result;
 };
 
-// const deleteProduct = async (id) => {
-//   const idExist = await getById(id);
-//   return !!idExist;
-// };
-
 module.exports = {
   getAll,
   getById,

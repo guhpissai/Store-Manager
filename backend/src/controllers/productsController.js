@@ -25,7 +25,6 @@ const updateProduct = async (req, res) => {
   if (!result) {
     return res.status(404).json({ message: 'Product not found' });
   }
-  console.log(result);
   return res.status(200).json(result);
 };
 
