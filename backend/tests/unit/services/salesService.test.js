@@ -3,11 +3,12 @@ const sinon = require('sinon');
 const salesModel = require('../../../src/models/salesModel');
 const salesService = require('../../../src/services/salesService');
 const productService = require('../../../src/services/productsService');
-const { 
-  idSalesMock, 
-  allSalesMock, 
-  productsMock, 
-  serviceProductMock } = require('../mocks/salesMock');
+const {
+  idSalesMock,
+  allSalesMock,
+  productsMock,
+  serviceProductMock,
+} = require('../mocks/salesMock');
 
 const { expect } = chai;
 
@@ -65,5 +66,23 @@ describe('Testes da camada Service das sales', function () {
     ]);
 
     expect(result).to.be.deep.equal(false);
+  });
+
+  it('Deve ser possivel deletar uma venda se ela existir', async function () {
+    sinon.stub(salesModel, 'getById').resolves(idSalesMock);
+    sinon.stub(salesModel, 'deleteSale').resolves(1);
+
+    const response = await salesService.deleteSale(1);
+
+    expect(response).to.be.deep.equal(1);
+  });
+
+  it('Nao deve ser possivel deletar uma venda inexistente', async function () {
+    sinon.stub(salesModel, 'deleteSale').resolves(999);
+    sinon.stub(salesModel, 'getById').resolves(null);
+
+    const response = await salesService.deleteSale(999);
+
+    expect(response).to.be.deep.equal(false);
   });
 });

@@ -35,4 +35,20 @@ describe('Testando a model de sales', function () {
 
     expect(result).to.be.deep.equal(productsMock);
   });
+
+  it('Deve ser possivel deletar uma venda existente', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+
+    const result = await salesModel.deleteSale(1);
+
+    expect(result).to.be.deep.equal(1);
+  });
+
+  it('Não deve ser possível deletar uma venda inexistente', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 0 }]);
+  
+    const result = await salesModel.deleteSale(999);
+  
+    expect(result.affectedRows).to.be.equal(undefined);
+  });
 });

@@ -27,7 +27,7 @@ const idSalesMock = [
     quantity: 5,
   },
   {
-    saleId: 1,
+    saleId: 2,
     date: '2023-05-29T21:36:06.000Z',
     productId: 2,
     quantity: 10,

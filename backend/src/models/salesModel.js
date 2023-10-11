@@ -1,8 +1,7 @@
 const connection = require('./connection');
 
 const getAll = async () => {
-  const [result] = await connection
-  .execute(
+  const [result] = await connection.execute(
     `SELECT 
     p.sale_id AS saleId, 
     s.date,
@@ -16,8 +15,8 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  const [result] = await connection
-  .execute(`SELECT 
+  const [result] = await connection.execute(
+    `SELECT 
   s.date,
   p.product_id AS productId, 
   p.quantity 
@@ -25,28 +24,28 @@ const getById = async (id) => {
   LEFT JOIN StoreManager.sales AS s 
   ON s.id = p.product_id
   WHERE sale_id = ?
-  ORDER BY p.sale_id, productId`, [id]);
+  ORDER BY p.sale_id, productId`,
+    [id],
+  );
   return result;
 };
 
 const createSaleId = async () => {
-  const [{ insertId }] = await connection
-  .execute(
-  'INSERT INTO StoreManager.sales () VALUES ();',
-);
-return insertId;
+  const [{ insertId }] = await connection.execute(
+    'INSERT INTO StoreManager.sales () VALUES ();',
+  );
+  return insertId;
 };
 
 const createSaleProduct = async (sale, id) => {
-  await connection
-  .execute(
-'INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?);',
-  [id, sale.productId, sale.quantity],
-);
-return {
-  productId: sale.productId,
-  quantity: sale.quantity,
-};
+  await connection.execute(
+    'INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?);',
+    [id, sale.productId, sale.quantity],
+  );
+  return {
+    productId: sale.productId,
+    quantity: sale.quantity,
+  };
 };
 
 const deleteSale = async (id) => {
