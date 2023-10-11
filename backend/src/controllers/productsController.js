@@ -7,9 +7,9 @@ const getAll = async (_req, res) => {
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const result = await productsService.getById(id);
-  return !result ? res.status(404).json({ message: 'Product not found' }) 
-  : res.status(200).json(result);
+  const { type, data } = await productsService.getById(id);
+  console.log(data);
+  return res.status(type).json(data);
 };
 
 const createProduct = async (req, res) => {
@@ -21,23 +21,13 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
-  const result = await productsService.updateProduct(name, id);
-  if (!result) {
-    return res.status(404).json({ message: 'Product not found' });
-  }
-  return res.status(200).json(result);
+  const { type, data } = await productsService.updateProduct(name, id);
+  return res.status(type).json(data);
 };
-
-// const deleteProduct = async (req, res) => {
-//   const { id } = req.params;
-//   await productsService.deleteProduct(id);
-//   return res.status(204);
-// };
 
 module.exports = {
   getAll,
   getById,
   createProduct,
   updateProduct,
-  // deleteProduct,
 };

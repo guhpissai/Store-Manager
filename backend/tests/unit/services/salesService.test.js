@@ -40,7 +40,7 @@ describe('Testes da camada Service das sales', function () {
     const result = await salesService.getById(999);
 
     expect(model).to.be.calledWith(999);
-    expect(result).to.be.equal(false);
+    expect(result).to.be.equal(null);
   });
 
   it('Deve ser possivel cadastrar uma nova venda', async function () {
@@ -74,15 +74,14 @@ describe('Testes da camada Service das sales', function () {
 
     const response = await salesService.deleteSale(1);
 
-    expect(response).to.be.deep.equal(1);
+    expect(response).to.be.deep.equal({ type: 204, data: {} });
   });
 
   it('Nao deve ser possivel deletar uma venda inexistente', async function () {
-    sinon.stub(salesModel, 'deleteSale').resolves(999);
-    sinon.stub(salesModel, 'getById').resolves(null);
+    sinon.stub(salesModel, 'getById').resolves([]);
 
     const response = await salesService.deleteSale(999);
 
-    expect(response).to.be.deep.equal(false);
+    expect(response).to.be.deep.equal({ type: 404, data: { message: 'Sale not found' } });
   });
 });

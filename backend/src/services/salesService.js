@@ -9,7 +9,7 @@ const getAll = async () => {
 const getById = async (id) => {
   const result = await salesModel.getById(id);
   if (!result.length) {
-    return false;
+    return null;
   }
   return result;
 };
@@ -37,11 +37,11 @@ const createSaleProduct = async (data) => {
 
 const deleteSale = async (id) => {
   const sale = await salesModel.getById(id);
-  if (sale) {
-    const response = await salesModel.deleteSale(id);
-    return response;
+  if (sale.length) {
+    await salesModel.deleteSale(id);
+    return { type: 204, data: {} };
   }
-  return false;
+  return { type: 404, data: { message: 'Sale not found' } };
 };
 
 module.exports = {

@@ -7,7 +7,8 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const result = await productsModel.getById(id);
-  return !result ? false : result;
+  if (!result) return { type: 404, data: { message: 'Product not found' } };
+  return { type: 200, data: result };
 };
 
 const createProduct = async (data) => {
@@ -16,12 +17,12 @@ const createProduct = async (data) => {
 };
 
 const updateProduct = async (name, id) => {
-  const idExist = await getById(id);
-  if (!idExist) {
-    return false;
+  const product = await productsModel.getById(id);
+  if (!product) {
+    return { type: 404, data: { message: 'Product not found' } };
   }
-  const result = await productsModel.updateProduct(name, id);
-  return result;
+  const updatedProduct = await productsModel.updateProduct(name, id);
+  return { type: 200, data: updatedProduct };
 };
 
 module.exports = {

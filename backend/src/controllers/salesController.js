@@ -25,9 +25,8 @@ const createSaleProduct = async (req, res) => {
 
 const deleteSale = async (req, res) => {
   const { id } = req.params;
-  const response = await salesService.deleteSale(id);
-  if (!response) return res.status(404).json({ message: 'Sale not found' });
-  return res.status(204).send();
+  const { type, data } = await salesService.deleteSale(id);
+  return res.status(type).json(data);
 };
 
 module.exports = {
