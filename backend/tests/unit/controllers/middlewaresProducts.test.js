@@ -8,8 +8,11 @@ describe('Testando os middlewares', function () {
   const req = {};
   const res = {};
 
-  res.status = sinon.stub().returns(res);
-  res.json = sinon.stub().returns();
+  beforeEach(function () {
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.restore();
+  });
 
   it('Deve retornar status 400 quando o name for indefinido', async function () {
     req.body = {};
