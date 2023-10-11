@@ -57,7 +57,7 @@ const deleteSale = async (id) => {
 };
 
 const getProductInSale = async (saleId, productId) => {
-  const [result] = await connection.execute(
+  const [[result]] = await connection.execute(
     'SELECT * FROM StoreManager.sales_products WHERE product_id = ? AND sale_id = ?',
     [productId, saleId],
   );

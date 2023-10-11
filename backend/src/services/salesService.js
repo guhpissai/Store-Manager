@@ -15,24 +15,19 @@ const getById = async (id) => {
 };
 
 const createSaleProduct = async (data) => {
-  let isTrue = true;
+  let productNotExist = false;
   const productPromisse = await data.map((sale) =>
     productsService.getById(sale.productId));
   const promisseResult = await Promise.all(productPromisse);
-  promisseResult.forEach((id) => {
-    if (id === false) {
-      isTrue = false;
-    }
+  promisseResult.forEach((product) => {
+    if (product.type === 404) productNotExist = true;
   });
-  if (!isTrue) return false;
+  if (productNotExist) return { type: 404, data: { message: 'Product not found' } };
   const id = await salesModel.createSaleId();
   const salesPromisse = await data.map((sale) =>
     salesModel.createSaleProduct(sale, id));
   const result = await Promise.all(salesPromisse);
-  return {
-    id,
-    itemsSold: result,
-  };
+  return { type: 201, data: { id, itemsSold: result } };
 };
 
 const deleteSale = async (id) => {
@@ -49,7 +44,9 @@ const updateSalesProducts = async (saleId, productId, quantity) => {
   if (!sale.length) return { type: 404, data: { message: 'Sale not found' } };
 
   const product = await salesModel.getProductInSale(saleId, productId);
-  if (!product.length) return { type: 404, data: { message: 'Product not found in sale' } };
+  if (!product) {
+    return { type: 404, data: { message: 'Product not found in sale' } };
+  }
 
   const data = await salesModel.updateSalesProducts(
     saleId,

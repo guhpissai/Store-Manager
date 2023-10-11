@@ -50,13 +50,13 @@ describe('Testes da camada Service das sales', function () {
 
     const result = await salesService.createSaleProduct([productsMock]);
 
-    expect(result).to.be.deep.equal(serviceProductMock);
+    expect(result).to.be.deep.equal({ type: 201, data: serviceProductMock });
   });
 
   it('Nao deve ser possivel cadastrar uma nova venda se o id nao existir', async function () {
-    sinon.stub(productService, 'getById').resolves(false);
-    sinon.stub(salesModel, 'createSaleId').resolves(undefined);
-    sinon.stub(salesModel, 'createSaleProduct').resolves(productsMock);
+    sinon
+      .stub(productService, 'getById')
+      .resolves({ type: 404, data: { message: 'Product not found' } });
 
     const result = await salesService.createSaleProduct([
       {
@@ -65,7 +65,10 @@ describe('Testes da camada Service das sales', function () {
       },
     ]);
 
-    expect(result).to.be.deep.equal(false);
+    expect(result).to.be.deep.equal({
+      type: 404,
+      data: { message: 'Product not found' },
+    });
   });
 
   it('Deve ser possivel deletar uma venda se ela existir', async function () {
@@ -82,6 +85,20 @@ describe('Testes da camada Service das sales', function () {
 
     const response = await salesService.deleteSale(999);
 
-    expect(response).to.be.deep.equal({ type: 404, data: { message: 'Sale not found' } });
+    expect(response).to.be.deep.equal({
+      type: 404,
+      data: { message: 'Sale not found' },
+    });
+  });
+
+  it('Nao deve ser possivel atualizar uma venda que nao existe', async function () {
+    sinon.stub(salesModel, 'getById').resolves([]);
+
+    const response = await salesService.updateSalesProducts(99, 1, 20);
+
+    expect(response).to.be.deep.equal({
+      type: 404,
+      data: { message: 'Sale not found' },
+    });
   });
 });

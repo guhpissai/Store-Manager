@@ -15,12 +15,9 @@ const getById = async (req, res) => {
 };
 
 const createSaleProduct = async (req, res) => {
-  const data = req.body;
-  const result = await salesService.createSaleProduct(data);
-  if (!result) {
-    return res.status(404).json({ message: 'Product not found' });
-  }
-  return res.status(201).json(result);
+  const products = req.body;
+  const { type, data } = await salesService.createSaleProduct(products);
+  return res.status(type).json(data);
 };
 
 const deleteSale = async (req, res) => {
