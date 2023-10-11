@@ -32,10 +32,23 @@ const updateProduct = async (name, id) => {
   return { type: 200, data: updatedProduct };
 };
 
+const searchProductByName = async (name) => {
+  if (!name) {
+    const allProducts = await productsModel.getAll();
+    return { type: 200, data: allProducts };
+  }
+  const productWithName = await productsModel.searchProductByName(name);
+  if (!productWithName.length) {
+    return { type: 200, data: [] };
+  }
+  return { type: 200, data: productWithName };
+};
+
 module.exports = {
   getAll,
   getById,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProductByName,
 };

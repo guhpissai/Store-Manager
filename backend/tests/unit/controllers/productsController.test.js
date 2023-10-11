@@ -12,9 +12,6 @@ describe('Testes da camada Controller dos produtos', function () {
   const req = {};
   const res = { end: sinon.stub() };
 
-  res.status = sinon.stub().returns(res);
-  res.json = sinon.stub().returns();
-
   beforeEach(function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns(res);
@@ -96,5 +93,16 @@ describe('Testes da camada Controller dos produtos', function () {
 
     expect(res.status).to.be.calledWith(404);
     expect(res.json).to.be.calledWith({ message: 'Product not found' });
+  });
+
+  it('Deve ser possivel deletar um produto caso ele exista', async function () {
+    req.params = { id: 1 };
+    
+    sinon.stub(productsService, 'deleteProduct').resolves({ type: 204, data: {} });
+
+    await productsController.deleteProduct(req, res);
+
+    expect(res.status).to.be.calledWith(204);
+    expect(res.json).to.be.calledWith({});
   });
 });

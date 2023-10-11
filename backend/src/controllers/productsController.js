@@ -31,10 +31,17 @@ const deleteProduct = async (req, res) => {
   return res.status(type).json(data);
 };
 
+const searchProductByName = async (req, res) => {
+  const name = req.query.q;
+  const { type, data } = await productsService.searchProductByName(name);
+  return res.status(type).json(data);
+};
+
 module.exports = {
   getAll,
   getById,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProductByName,
 };
