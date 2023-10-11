@@ -16,6 +16,13 @@ const createProduct = async (data) => {
   return result;
 };
 
+const deleteProduct = async (id) => {
+  const product = await productsModel.getById(id);
+  if (!product) return { type: 404, data: { message: 'Product not found' } };
+  await productsModel.deleteProduct(id);
+  return { type: 204, data: {} };
+};
+
 const updateProduct = async (name, id) => {
   const product = await productsModel.getById(id);
   if (!product) {
@@ -30,4 +37,5 @@ module.exports = {
   getById,
   createProduct,
   updateProduct,
+  deleteProduct,
 };
