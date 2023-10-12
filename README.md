@@ -1,5 +1,6 @@
 # Store Manager
-Descrição
+
+## Descrição
 Este repositório contém a API Store Manager, uma aplicação construída utilizando Node.js e o framework Express.js. A API segue a arquitetura em camadas para gerenciamento de vendas, permitindo a criação, visualização, exclusão e atualização de produtos e vendas. Utiliza um banco de dados MySQL para a gestão eficiente dos dados, seguindo o padrão RESTful.
 
 ## Rotas
