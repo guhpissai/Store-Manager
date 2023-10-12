@@ -73,7 +73,7 @@ A aplicação estará rodando na porta 3001.
 
 ## Ferramentas e Plugins
 
-A Store Manager API pode ser testada e utilizada de forma eficiente com a ajuda das seguintes ferramentas e plugins:
+A Store Manager API é testada e utilizada de forma eficiente com a ajuda das seguintes ferramentas e plugins:
 
 - **Testes da API:** A aplicação possui testes implementados utilizando Chai e Sinon, proporcionando uma validação robusta das funcionalidades da API.
 - **Banco de Dados:** A Store Manager API utiliza um banco de dados MySQL que está configurado para rodar na porta `3306`.
