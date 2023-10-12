@@ -23,7 +23,7 @@ Cadastra um novo produto. O corpo da requisição deve seguir o formato abaixo:
 }
 ```
 ## POST `/sales`
-Cadastra uma nova venda. O corpo da requisição deve seguir o formato abaixo:
+Cadastra novas vendas. O corpo da requisição deve seguir o formato abaixo:
 ```json
 [
   {
